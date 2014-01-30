@@ -11,20 +11,19 @@ import java.util.ArrayList;
  *
  */
 public class Card {
-	private long custID, custPnr;
-	private String custName, custAddress, custPhone;
-	private int[] custCards;
-	private static ArrayList<Card> customers = new ArrayList<Card>();
+	private int cardID, custID;
+	private long custPnr;
+	private String cardName, cardAddress, cardPhone;
+	private static ArrayList<Card> cards = new ArrayList<Card>();
 
-	public Card(int custID, long custPnr, String custName, String  custAddress,  String custPhone, int[] custCards) {
-		this.custID = custID;
-		this.setCustPnr(custPnr);
-		this.setCustName(custName);
-		this.setCustAddress(custAddress);
-		this.setCustPhone(custPhone);
-		this.setCustCards(custCards);
-		// Add this instance to the list of customers with custID as index
-		customers.add(custID, this);
+	public Card(int cardID, int custID, String cardName, String  cardAddress,  String cardPhone) {
+		this.cardID = cardID;
+		this.cardID = custID;
+		this.setCardName(cardName);
+		this.setCardAddress(cardAddress);
+		this.setCardPhone(cardPhone);
+		// Add this instance to the list of cards with cardID as index
+		cards.add(cardID, this);
 	}
 
 	/**
@@ -32,15 +31,20 @@ public class Card {
 	 * @param custID
 	 * @return A customer object
 	 */
-	public static Card getCustomer(int custID) {
-		return customers.get(custID);
+	public static Card getCardomer(int custID) {
+		return cards.get(custID);
 	}
 
 	/**
-	 * @return Get the ArrayList containing customers
+	 * @return Get the ArrayList containing cards for a customer
 	 */
-	public static ArrayList<Card> getCustomers() {
-		return customers;
+	public static ArrayList<Card> getCards(Customer reqCust) {
+		// TODO hämta kort baserat på customerID från databasen
+		ArrayList<Card> output = new ArrayList<Card>();
+		for (int custCardID: reqCust.getCustCards()) {
+			output.add(cards.get(custCardID));
+		}
+		return output;
 	}
 
 	/**
@@ -52,44 +56,36 @@ public class Card {
 		return true;
 	}
 
-	public String getCustName() {
-		return custName;
+	public String getCardName() {
+		return cardName;
 	}
 
-	public void setCustName(String custName) {
-		this.custName = custName;
+	public void setCardName(String custName) {
+		this.cardName = custName;
 	}
 
-	public String getCustAddress() {
-		return custAddress;
+	public String getCardAddress() {
+		return cardAddress;
 	}
 
-	public void setCustAddress(String custAddress) {
-		this.custAddress = custAddress;
+	public void setCardAddress(String custAddress) {
+		this.cardAddress = custAddress;
 	}
 
-	public int[] getCustCards() {
-		return custCards;
+	public String getCardPhone() {
+		return cardPhone;
 	}
 
-	public void setCustCards(int[] custCards) {
-		this.custCards = custCards;
+	public void setCardPhone(String custPhone) {
+		this.cardPhone = custPhone;
 	}
 
-	public String getCustPhone() {
-		return custPhone;
-	}
-
-	public void setCustPhone(String custPhone) {
-		this.custPhone = custPhone;
-	}
-
-	public long getCustPnr() {
+	public long getCardPnr() {
 		return custPnr;
 	}
 
-	public void setCustPnr(long custPnr) {
-		this.custPnr = custPnr;
+	public void setCustID(int custID) {
+		this.cardID = custID;
 	}
 
 	public long getCustID() {

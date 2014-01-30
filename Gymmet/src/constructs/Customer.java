@@ -10,7 +10,8 @@ import java.util.ArrayList;
  *
  */
 public class Customer {
-	private long custID, custPnr;
+	private int custID;
+	private long custPnr;
 	private String custName, custAddress, custPhone;
 	// TODO läs in Cards objekt till en arraylist då informationen efterfrågas från databasen istället
 	// Array innehållande index till de kort kunden har på sitt konto
@@ -94,7 +95,7 @@ public class Customer {
 		this.custPnr = custPnr;
 	}
 
-	public long getCustID() {
+	public int getCustID() {
 		return custID;
 	}
 
