@@ -1,0 +1,43 @@
+Coupons;12345;7708190034;2000.0;2014-01-14;Spinning;10
+V;2013-09-15 18:00;Spinning;Spinning soft 45min
+V;2013-09-27 12:00;Spinning;Spinning lunch
+V;2013-09-27 17:30;Spinning;Spinning intervals
+V;2013-10-25 20:30;Spinning;Spinning 55min
+Coupons;13346;7708190034;1000.0;2014-02-21;Gym;5
+V;2013-10-22 12:23;Gym;Visiting gym
+V;2013-10-27 14:23;Gym;Visiting gym
+V;2013-10-28 09:23;Gym;Visiting gym
+V;2013-10-29 00:34;Gym;Visiting gym
+Period;22345;7708190034;1000.0;2013-09-12
+V;2013-07-03 18:00;Spinning;Spinning soft 45min
+V;2013-07-21 12:23;Gym;Visiting gym
+V;2013-08-21 14:23;Gym;Visiting gym
+V;2013-09-10 09:30;Spinning;Spinning 55min
+Period;14347;9609131234;2000.0;2013-11-15
+V;2013-07-13 20:00;Spinning;Spinning soft 45min
+V;2013-07-25 12:23;Gym;Visiting gym
+V;2013-08-12 14:23;Gym;Visiting gym
+V;2013-09-01 20:30;Aerobics;Aerobics intense 55min
+V;2013-10-03 12:23;Gym;Visiting gym
+V;2013-10-09 14:23;Gym;Visiting gym
+V;2013-10-20 09:23;Gym;Visiting gym
+V;2013-10-23 00:34;Gym;Visiting gym
+V;2013-11-12 09:50;Gym;Visiting gym
+Period;24347;9609131234;2000.0;2014-05-17
+V;2013-11-16 10:20;Gym;Visiting gym
+V;2013-11-23 13:43;Gym;Visiting gym
+V;2013-12-10 14:20;Gym;Visiting gym
+Coupons;15348;9310152345;1000.0;2014-03-21;Gym;5
+V;2013-11-22 15:23;Gym;Visiting gym
+V;2013-11-30 14:23;Gym;Visiting gym
+V;2013-12-12 15:23;Gym;Visiting gym
+V;2013-12-17 14:23;Gym;Visiting gym
+Coupons;17340;8501293345;1000.0;2014-03-02;Aerobics;5
+V;2013-11-01 10:30;Aerobics;Aerobics intense 55min
+V;2013-11-10 18:30;Aerobics;Aerobics intense 55min
+V;2013-11-22 08:30;Aerobics;Aerobics 45min
+V;2013-11-27 11:30;Aerobics;Intense 75min
+V;2013-12-01 18:30;Aerobics;Dance 55min
+Period;18355;8501293345;1000.0;2014-03-07
+V;2013-12-08 10:00;Aerobics;Aerobics 45min
+V;2013-12-15 12:00;Aerobics;Aerobics intense 55min

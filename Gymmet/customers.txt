@@ -1,0 +1,4 @@
+Anna Andersson;7708190034;Storgatan 27B, Hallstavik;070777898
+Hans Hansson;9609131234;Huvudgatan 34, 58334 Huvudstaden;08345678
+Lisa Albertsson;9310152345;Sidengatan 1 A, 33456 Lima, Sverige;0907676755
+Hella Svensson;8501293345;Lillstigen 234, Hammar;070789899
