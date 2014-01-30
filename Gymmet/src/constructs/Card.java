@@ -2,12 +2,12 @@ package constructs;
 import java.util.ArrayList;
 
 /**
- * Card class, stores and handles customer information
+ * Card class, stores and handles card information
  */
 
 /**
  * Constructor for card class
- * @author riz
+ * @author Jonas Rosenqvist & Lennart Johansson
  *
  */
 public class Card {
