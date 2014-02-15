@@ -1733,3 +1733,9 @@
 2014-02-15 21:36:24,889 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\riz\Documents\GitHub\projectjava\Gymmet\src\main\resources
 2014-02-15 21:36:24,892 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
 2014-02-15 21:36:24,895 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\riz\Documents\GitHub\projectjava\Gymmet\src\test\resources
+2014-02-15 22:10:16,128 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - File encoding has not been set, using platform encoding Cp1252, i.e. build is platform dependent!
+2014-02-15 22:10:16,138 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2014-02-15 22:10:16,140 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\riz\Documents\GitHub\projectjava\Gymmet\src\main\resources
+2014-02-15 22:10:16,141 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\riz\Documents\GitHub\projectjava\Gymmet\src\main\resources
+2014-02-15 22:10:16,142 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2014-02-15 22:10:16,145 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\riz\Documents\GitHub\projectjava\Gymmet\src\test\resources
