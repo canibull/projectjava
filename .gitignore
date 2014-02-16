@@ -2,7 +2,7 @@
 /build/
 /bin/
 target/
-.metadata/
+.metadata/*
 
 # OS Files #
 .DS_Store
