@@ -28,6 +28,7 @@ public class Application {
         CustomerJDBCTemplate customerJDBCTemplate = (CustomerJDBCTemplate)context.getBean("customerJDBCTemplate");
         CardJDBCTemplate cardJDBCTemplate = (CardJDBCTemplate)context.getBean("cardJDBCTemplate");
 
+        
         System.out.println("--- START ---\n");
         System.out.println(Customer.getCustomers().size());
         readCustomersFromCSV();

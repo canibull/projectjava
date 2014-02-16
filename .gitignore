@@ -2,7 +2,7 @@
 /build/
 /bin/
 target/
-.metadata
+.metadata/
 
 # OS Files #
 .DS_Store
@@ -70,3 +70,9 @@ local.properties
  
 # PDT-specific
 .buildpath
+
+# Maven specific
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
