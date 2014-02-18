@@ -7,6 +7,8 @@ import java.util.Iterator;
 @SuppressWarnings("serial")
 public class Card implements Serializable {
 
+public static CardDAO jdbc_DAO;	
+
 private int cardID;
 private long cardPnr;
 /**

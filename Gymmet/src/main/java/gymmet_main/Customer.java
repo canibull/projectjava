@@ -1,11 +1,14 @@
 package gymmet_main;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 @SuppressWarnings("serial")
 public class Customer implements Serializable {
+
+public static CustomerDAO jdbc_DAO;
 
 private int custID;
 private long custPnr;
@@ -14,14 +17,15 @@ private long custPnr;
  */
 private boolean custAltered = false;
 private String custName, custAddress, custPhone;
-// TODO läs in Cards objekt till en arraylist då informationen efterfrågas från databasen istället
 // Array containing indexes of cards linked to customer
 private int[] custCards;
 // Static variable containing loaded customer instances
-private static ArrayList<Customer> customers = new ArrayList<Customer>();
+private static LinkedHashMap<Integer, Customer> customers = new LinkedHashMap<Integer, Customer>();
+// Static variable containing new or externally loaded customer instances
+private static LinkedHashMap<Integer, Customer> extCustomers = new LinkedHashMap<Integer, Customer>();
 
 public Customer() {
-	customers.add(custID, this);
+
 }
 
 public Customer(int custID, long custPnr, String custName, String  custAddress,  String custPhone, int[] custCards) {
@@ -32,8 +36,6 @@ public Customer(int custID, long custPnr, String custName, String  custAddress, 
 	this.setCustPhone(custPhone);
 	this.setCustCards(custCards);
 	this.setCustAltered(false);
-	// Add this instance to the list of customers with custID as index
-	customers.add(custID, this);
 }
 
 /* (non-Javadoc)
@@ -45,49 +47,56 @@ public String toString() {
     return output;
 }
 
+public void addToList(int index, Customer cust) {
+	customers.put(index, cust);
+}
+
+public void addToExtList(int index, Customer cust) {
+	extCustomers.put(index, cust);
+}
+
 /**
- * Set customer id, used by fieldmapper
- * @param custID
+ * Static function to store all unsaved changes to customers and add any external customers
+ * @return true if a change is made false if not
  */
-protected void setID(int custID) {
-	this.custID = custID;
-	this.setCustAltered(true);
+public static boolean commitChanges() {
+	boolean output = false;
+	if (!extCustomers.isEmpty()) {
+		for (Customer excust: extCustomers.values()) {
+			jdbc_DAO.create(excust);
+		}
+		extCustomers.clear();
+	}
+	for (Customer cust: customers.values()) {
+		if (cust.isCustAltered()) {
+			jdbc_DAO.update(cust);
+			output = true;
+		}
+	}
+	return output;
 }
 
 /**
  * @return Get the ArrayList containing customers
  */
-public static ArrayList<Customer> getCustomers() {
-	return customers;
+public static Collection<Customer> getCustomers() {
+	return customers.values();
 }
 
 /**
- * Commit changes to customer and update data-set
- * @return true if successful false if an error occurred
+ * @return Get the ArrayList containing external customers
  */
-public boolean commitChanges() {
-	// TODO implement functionality
-	if (this.isCustAltered()) {
-		return true;
-	}
-	return false;
+public static Collection<Customer> getExtCustomers() {
+	return extCustomers.values();
 }
 
 /**
- * Static function to store all unsaved changes to customers
- * @return True if anything changed
+ * Set customer id
+ * @param custID
  */
-public static boolean commitAllChanges() {
-	boolean output = false;
-	Iterator<Customer> iter = customers.iterator();
-	while (iter.hasNext()) {
-		Customer cust = iter.next();
-		if (cust.isCustAltered()) {
-			// TODO implement functionality
-			output = true;
-		}
-	}
-	return output;
+protected void setID(int custID) {
+	this.custID = custID;
+	this.setCustAltered(true);
 }
 
 public String getCustName() {
@@ -136,7 +145,7 @@ public void setCustPnr(long custPnr) {
 }
 
 public int getCustID() {
-	return custID;
+	return this.custID;
 }
 
 public boolean isCustAltered() {

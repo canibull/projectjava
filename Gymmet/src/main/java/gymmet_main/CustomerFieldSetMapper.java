@@ -8,12 +8,13 @@ public class CustomerFieldSetMapper implements FieldSetMapper<Customer> {
         Customer cust = new Customer();
         // TODO Error checking
         // Set ID to array list size + 1 since CSV does not contain any ID
-        cust.setID(Customer.getCustomers().size());
+        cust.setID(Customer.getExtCustomers().size());
         cust.setCustName(fieldSet.readString(0));
-        cust.setCustPnr(fieldSet.readInt(1)); 
+        cust.setCustPnr(fieldSet.readLong(1)); 
         cust.setCustAddress(fieldSet.readString(2));
         cust.setCustPhone(fieldSet.readString(3));
-
+        cust.setCustAltered(false);
+        cust.addToExtList(cust.getCustID(), cust);
         return cust;
     }
 }

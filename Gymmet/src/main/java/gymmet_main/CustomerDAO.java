@@ -14,7 +14,7 @@ public interface CustomerDAO {
     * This is the method to be used to create
     * a record in the Customer table.
     */
-   public void create(String name, Long pnr, String address, String phone);
+   public void create(Customer cust);
    /** 
     * This is the method to be used to list down
     * a record from the Customer table corresponding
@@ -36,5 +36,5 @@ public interface CustomerDAO {
     * This is the method to be used to update
     * a record into the Customer table.
     */
-   public void update(Integer id, Integer age);
+   public void update(Customer cust);
 }

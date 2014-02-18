@@ -13,6 +13,8 @@ public class CustomerRowMapper implements RowMapper<Customer> {
       cust.setCustPnr(rs.getLong("custpnr")); 
       cust.setCustAddress(rs.getString("custAddress"));
       cust.setCustPhone(rs.getString("custphone"));
+      cust.setCustAltered(false);
+      cust.addToList(cust.getCustID(), cust);
       return cust;
    }
 }

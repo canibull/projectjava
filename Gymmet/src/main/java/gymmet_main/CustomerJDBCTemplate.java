@@ -13,11 +13,10 @@ public class CustomerJDBCTemplate implements CustomerDAO {
       this.jdbcTemplateObject = new JdbcTemplate(dataSource);
    }
 
-   public void create(String name, Long pnr, String address, String phone) {
-      String SQL = "insert into customers (custname, custpnr, custaddress, custphone) values (?, ?, ?, ?)";
-      
-      jdbcTemplateObject.update( SQL, name, pnr, address, phone);
-      System.out.println("Created Record Name = " + name + " Age = " + pnr + " Address = " + address + " Phone = " + phone);
+   public void create(Customer cust) {
+	  String SQL = "INSERT INTO gymmet.customers (custpnr, custname, custaddress, custphone) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE custpnr = VALUES(custpnr), custname = VALUES(custname), custaddress = VALUES(custaddress), custphone = VALUES(custphone)";
+	  jdbcTemplateObject.update( SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustPhone());
+      System.out.println("Created Record Name = " + cust.getCustName() + " Age = " + cust.getCustPnr() + " Address = " + cust.getCustAddress() + " Phone = " + cust.getCustPhone());
       return;
    }
 
@@ -42,10 +41,10 @@ public class CustomerJDBCTemplate implements CustomerDAO {
       return;
    }
 
-   public void update(Integer id, Integer age){
-      String SQL = "update customers set age = ? where id = ?";
-      jdbcTemplateObject.update(SQL, age, id);
-      System.out.println("Updated Record with ID = " + id );
+   public void update(Customer cust){
+      String SQL = "UPDATE customers SET custpnr = ?, custname = ?, custaddress = ? WHERE id = ?";
+      jdbcTemplateObject.update(SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustID());
+      System.out.println("Updated Record with ID = " + cust.getCustID() );
       return;
    }
 
