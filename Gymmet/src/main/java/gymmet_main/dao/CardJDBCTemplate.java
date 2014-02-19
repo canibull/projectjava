@@ -1,7 +1,11 @@
-package gymmet_main;
+package gymmet_main.dao;
+
+import gymmet_main.model.Card;
 
 import java.util.List;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class CardJDBCTemplate implements CardDAO {

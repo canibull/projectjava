@@ -1,5 +1,11 @@
 package gymmet_main;
 
+import gymmet_main.dao.CardJDBCTemplate;
+import gymmet_main.dao.CustomerFieldSetMapper;
+import gymmet_main.dao.CustomerJDBCTemplate;
+import gymmet_main.model.Card;
+import gymmet_main.model.Customer;
+
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
@@ -30,7 +36,10 @@ public class Application {
         InterfaceHandler.interactionLoop();
 
         context.close();
-        }
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 

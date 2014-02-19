@@ -1,9 +1,12 @@
-package gymmet_main;
+package gymmet_main.dao;
+
+import gymmet_main.model.Customer;
 
 import java.util.List;
+
 import javax.sql.DataSource;
 
-public interface CardDAO {
+public interface CustomerDAO {
    /** 
     * This is the method to be used to initialize
     * database resources ie. connection.
@@ -11,29 +14,29 @@ public interface CardDAO {
    public void setDataSource(DataSource ds);
    /** 
     * This is the method to be used to create
-    * a record in the Card table.
+    * a record in the Customer table.
     */
-   public void create(char type, Integer customer);
+   public void create(Customer cust);
    /** 
     * This is the method to be used to list down
-    * a record from the Card table corresponding
-    * to a passed Card id.
+    * a record from the Customer table corresponding
+    * to a passed Customer id.
     */
-   public Card getCard(Integer id);
+   public Customer getCustomer(Integer id);
    /** 
     * This is the method to be used to list down
-    * all the records from the Card table.
+    * all the records from the Customer table.
     */
-   public List<Card> listCards();
+   public List<Customer> loadCustomers();
    /** 
     * This is the method to be used to delete
-    * a record from the Card table corresponding
-    * to a passed Card id.
+    * a record from the Customer table corresponding
+    * to a passed Customer id.
     */
    public void delete(Integer id);
    /** 
     * This is the method to be used to update
-    * a record into the Card table.
+    * a record into the Customer table.
     */
-   public void update(Integer id, Integer customer);
+   public void update(Customer cust);
 }

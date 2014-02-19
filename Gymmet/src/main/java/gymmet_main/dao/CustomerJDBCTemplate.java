@@ -1,7 +1,13 @@
-package gymmet_main;
+package gymmet_main.dao;
 
+import gymmet_main.model.Customer;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class CustomerJDBCTemplate implements CustomerDAO {
@@ -16,7 +22,7 @@ public class CustomerJDBCTemplate implements CustomerDAO {
    public void create(Customer cust) {
 	  String SQL = "INSERT INTO gymmet.customers (custpnr, custname, custaddress, custphone) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE custpnr = VALUES(custpnr), custname = VALUES(custname), custaddress = VALUES(custaddress), custphone = VALUES(custphone)";
 	  jdbcTemplateObject.update( SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustPhone());
-      System.out.println("Created Record Name = " + cust.getCustName() + " Age = " + cust.getCustPnr() + " Address = " + cust.getCustAddress() + " Phone = " + cust.getCustPhone());
+      //System.out.println("Created Record Name = " + cust.getCustName() + " Age = " + cust.getCustPnr() + " Address = " + cust.getCustAddress() + " Phone = " + cust.getCustPhone());
       return;
    }
 
@@ -27,24 +33,24 @@ public class CustomerJDBCTemplate implements CustomerDAO {
       return Customer;
    }
 
-   public List<Customer> listCustomers() {
+   public List<Customer> loadCustomers() {
       String SQL = "select * from customers";
-      List <Customer> Customers = jdbcTemplateObject.query(SQL, 
-                                new CustomerRowMapper());
-      return Customers;
+      List<Customer> Customers = jdbcTemplateObject.query(SQL, 
+              new CustomerRowMapper());
+     return Customers;
    }
 
    public void delete(Integer id){
       String SQL = "delete from customers where id = ?";
       jdbcTemplateObject.update(SQL, id);
-      System.out.println("Deleted Record with ID = " + id );
+      //System.out.println("Deleted Record with ID = " + id );
       return;
    }
 
    public void update(Customer cust){
       String SQL = "UPDATE customers SET custpnr = ?, custname = ?, custaddress = ? WHERE id = ?";
       jdbcTemplateObject.update(SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustID());
-      System.out.println("Updated Record with ID = " + cust.getCustID() );
+      //System.out.println("Updated Record with ID = " + cust.getCustID() );
       return;
    }
 

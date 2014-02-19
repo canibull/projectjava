@@ -14,13 +14,13 @@
 
    <!-- Definition for customerJDBCTemplate bean -->
    <bean id="customerJDBCTemplate" 
-      class="gymmet_main.CustomerJDBCTemplate">
+      class="gymmet_main.dao.CustomerJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
 
    <!-- Definition for cardJDBCTemplate bean -->
    <bean id="cardJDBCTemplate" 
-      class="gymmet_main.CardJDBCTemplate">
+      class="gymmet_main.dao.CardJDBCTemplate">
       <property name="dataSource"  ref="dataSource" />    
    </bean>
 

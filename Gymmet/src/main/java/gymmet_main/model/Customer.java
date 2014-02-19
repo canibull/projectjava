@@ -1,9 +1,13 @@
-package gymmet_main;
+package gymmet_main.model;
+
+import gymmet_main.dao.CustomerDAO;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Customer implements Serializable {
@@ -20,9 +24,9 @@ private String custName, custAddress, custPhone;
 // Array containing indexes of cards linked to customer
 private int[] custCards;
 // Static variable containing loaded customer instances
-private static LinkedHashMap<Integer, Customer> customers = new LinkedHashMap<Integer, Customer>();
+private static LinkedHashMap<Long, Customer> customers = new LinkedHashMap<Long, Customer>();
 // Static variable containing new or externally loaded customer instances
-private static LinkedHashMap<Integer, Customer> extCustomers = new LinkedHashMap<Integer, Customer>();
+private static LinkedHashMap<Long, Customer> extCustomers = new LinkedHashMap<Long, Customer>();
 
 public Customer() {
 
@@ -47,11 +51,11 @@ public String toString() {
     return output;
 }
 
-public void addToList(int index, Customer cust) {
+public void addToList(Long index, Customer cust) {
 	customers.put(index, cust);
 }
 
-public void addToExtList(int index, Customer cust) {
+public void addToExtList(Long index, Customer cust) {
 	extCustomers.put(index, cust);
 }
 
@@ -77,10 +81,25 @@ public static boolean commitChanges() {
 }
 
 /**
- * @return Get the ArrayList containing customers
+ * @return Get the containing customers
  */
 public static Collection<Customer> getCustomers() {
 	return customers.values();
+}
+
+/**
+ * @return Get the containing customer
+ */
+public static Customer getCustomer(long custID) {
+	return customers.get(custID);
+}
+
+/**
+ * @return Set the containing customers
+ */
+public static void setCustomers(List<Customer> inCustomers) {
+	//customers = new LinkedHashMap<Integer, Customer>(inCustomers., inCustomers);
+	//customers = (LinkedHashMap<Integer, Customer>) inCustomers;
 }
 
 /**
@@ -94,7 +113,7 @@ public static Collection<Customer> getExtCustomers() {
  * Set customer id
  * @param custID
  */
-protected void setID(int custID) {
+public void setID(int custID) {
 	this.custID = custID;
 	this.setCustAltered(true);
 }

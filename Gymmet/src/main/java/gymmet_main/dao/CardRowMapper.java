@@ -1,4 +1,6 @@
-package gymmet_main;
+package gymmet_main.dao;
+
+import gymmet_main.model.Card;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

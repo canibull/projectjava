@@ -1,4 +1,6 @@
-package gymmet_main;
+package gymmet_main.dao;
+
+import gymmet_main.model.Customer;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
@@ -14,7 +16,7 @@ public class CustomerFieldSetMapper implements FieldSetMapper<Customer> {
         cust.setCustAddress(fieldSet.readString(2));
         cust.setCustPhone(fieldSet.readString(3));
         cust.setCustAltered(false);
-        cust.addToExtList(cust.getCustID(), cust);
+        cust.addToExtList(cust.getCustPnr(), cust);
         return cust;
     }
 }

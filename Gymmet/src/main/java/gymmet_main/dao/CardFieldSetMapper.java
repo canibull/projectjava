@@ -1,4 +1,6 @@
-package gymmet_main;
+package gymmet_main.dao;
+
+import gymmet_main.model.Card;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;

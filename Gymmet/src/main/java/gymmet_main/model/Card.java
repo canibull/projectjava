@@ -1,4 +1,6 @@
-package gymmet_main;
+package gymmet_main.model;
+
+import gymmet_main.dao.CardDAO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public String toString() {
  * Set Card id, used by fieldmapper
  * @param cardID
  */
-protected void setID(int cardID) {
+public void setID(int cardID) {
 	this.cardID = cardID;
 	this.setCardAltered(true);
 }
