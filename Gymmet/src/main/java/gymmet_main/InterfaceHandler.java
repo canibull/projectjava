@@ -3,7 +3,6 @@ package gymmet_main;
 import gymmet_main.model.Customer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class InterfaceHandler extends Application {
@@ -103,7 +102,7 @@ public class InterfaceHandler extends Application {
 		} else if (kommandoarr[0].compareTo("help") == 0) {
 
 			// Skriv ut en lista på tillgängliga hjälpavsnitt
-			System.out.println("Available commands:\nhelp\nlog\nlist\nview\nedit\ncreate\nremove\nstatus\npurchase\nregister");
+			System.out.println("Available commands:\nhelp\nlog\nlist\nview\nedit\nnew\nremove\nstatus\npurchase\nregister");
 
 		// Om kommandot är story och det finns ett andra argument ska storyn skrivas till ett filnamn 
 		} else if (kommandoarr[0].compareTo("story") == 0 && kommandoarr.length > 1) {
@@ -111,22 +110,42 @@ public class InterfaceHandler extends Application {
 			// Anropa funktionen makeStory med andra värdet av kommandoarray för filnamn
 			//makeStory(true,kommandoarr[1]);
 
-		// Om det inte finns något andra argument ska makestory 
+		// Hämta kunder från databasen och skriv ut en lista över dem på skärmen
 		} else if (kommandoarr[0].compareTo("list") == 0) {
 
 	        loadCustomers();
 	        listCustomers();
 
-		// Om det inte finns något andra argument ska makestory 
+		// Importera kunder från CSV fil och skriv unika kunder till databasen, uppdatera sedan objekten
 		} else if (kommandoarr[0].compareTo("import") == 0) {
 
-	        readCustomersFromCSV();
+	        ActionHandler.readCustomersFromCSV();
+	    	Customer.commitChanges();
 	        loadCustomers();
 
 		// Kör funktionen generateStories med ett filnamn som argument
-		} else if (kommandoarr[0].compareTo("generateStories") == 0 && kommandoarr.length > 1) {
+		} else if (kommandoarr[0].compareTo("new") == 0) {
 
-			//parseFile(kommandoarr[1]);
+			// Skapa en ny instans av scannerklassen
+			Scanner in = new Scanner(System.in);
+
+	        Customer cust = new Customer();
+	        // Set ID to array list size + 1 since CSV does not contain any ID
+	        cust.setID(Customer.getExtCustomers().size());
+	        System.out.println("Enter customer information:");
+	        System.out.print("Name: ");
+	        cust.setCustName(in.nextLine());
+	        System.out.print("ID (10 digits): ");
+	        cust.setCustPnr(Long.parseLong(in.nextLine())); 
+	        System.out.print("Address: ");
+	        cust.setCustAddress(in.nextLine());
+	        System.out.print("Phonenumber: ");
+	        cust.setCustPhone(in.nextLine());
+	        cust.setCustAltered(false);
+	        cust.addToExtList(cust.getCustPnr(), cust);
+
+	        Customer.commitChanges();
+	        System.out.println("Customer added:\n" + cust.toString());
 
 		} else {
 

@@ -4,15 +4,7 @@ import gymmet_main.model.Customer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.springframework.jdbc.core.RowMapper;
-
-import sun.org.mozilla.javascript.internal.ast.NewExpression;
-
-import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry.Entry;
 
 public class CustomerRowMapper implements RowMapper<Customer> {
    public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {

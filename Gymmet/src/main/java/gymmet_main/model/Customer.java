@@ -4,10 +4,7 @@ import gymmet_main.dao.CustomerDAO;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Customer implements Serializable {
@@ -46,15 +43,29 @@ public Customer(int custID, long custPnr, String custName, String  custAddress, 
  * @see java.lang.Object#toString()
  */
 public String toString() {
-    String output = "CUSTOMER:ID=" + custID + ", Name=" + custName + ", Identification=" +  custPnr +
-    		", Address=" + custAddress + ", Phone=" + custPhone;
+	// String output = "CUSTOMER:ID=" + custID + ", Name=" + custName + ", Identification=" +  custPnr + ", Address=" + custAddress + ", Phone=" + custPhone;
+    String output = "ID: " +  custPnr + 
+    		"	[Name: " + custName + 
+    		",	Address: " + custAddress + 
+    		", Phone: " + custPhone +
+    		", DBID: " + custID +"]";
     return output;
 }
 
+/**
+ * Add a customer to the list of customers 
+ * @param index
+ * @param cust
+ */
 public void addToList(Long index, Customer cust) {
 	customers.put(index, cust);
 }
 
+/**
+ * Add to the external list of customers not in database (created or imported)
+ * @param index
+ * @param cust
+ */
 public void addToExtList(Long index, Customer cust) {
 	extCustomers.put(index, cust);
 }
@@ -81,29 +92,21 @@ public static boolean commitChanges() {
 }
 
 /**
- * @return Get the containing customers
- */
-public static Collection<Customer> getCustomers() {
-	return customers.values();
-}
-
-/**
- * @return Get the containing customer
+ * @return Get a specific customer based on identification number
  */
 public static Customer getCustomer(long custID) {
 	return customers.get(custID);
 }
 
 /**
- * @return Set the containing customers
+ * @return Get list of customers
  */
-public static void setCustomers(List<Customer> inCustomers) {
-	//customers = new LinkedHashMap<Integer, Customer>(inCustomers., inCustomers);
-	//customers = (LinkedHashMap<Integer, Customer>) inCustomers;
+public static Collection<Customer> getCustomers() {
+	return customers.values();
 }
 
 /**
- * @return Get the ArrayList containing external customers
+ * @return Get list of external customers
  */
 public static Collection<Customer> getExtCustomers() {
 	return extCustomers.values();

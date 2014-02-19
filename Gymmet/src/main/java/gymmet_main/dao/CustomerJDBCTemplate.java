@@ -2,8 +2,6 @@ package gymmet_main.dao;
 
 import gymmet_main.model.Customer;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -11,6 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class CustomerJDBCTemplate implements CustomerDAO {
+   @SuppressWarnings("unused")
    private DataSource dataSource;
    private JdbcTemplate jdbcTemplateObject;
    
