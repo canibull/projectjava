@@ -40,15 +40,14 @@ public class CustomerJDBCTemplate implements CustomerDAO {
    }
 
    public void delete(Integer id){
-      String SQL = "delete from customers where id = ?";
+      String SQL = "delete from customers where custid = ?";
       jdbcTemplateObject.update(SQL, id);
-      //System.out.println("Deleted Record with ID = " + id );
       return;
    }
 
    public void update(Customer cust){
-      String SQL = "UPDATE customers SET custpnr = ?, custname = ?, custaddress = ? WHERE id = ?";
-      jdbcTemplateObject.update(SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustID());
+      String SQL = "UPDATE customers SET custpnr = ?, custname = ?, custaddress = ?, custphone = ? WHERE custid = ?";
+      jdbcTemplateObject.update(SQL, cust.getCustPnr(), cust.getCustName(), cust.getCustAddress(), cust.getCustPhone(), cust.getCustID());
       //System.out.println("Updated Record with ID = " + cust.getCustID() );
       return;
    }

@@ -18,11 +18,10 @@ public class CardJDBCTemplate implements CardDAO {
       this.jdbcTemplateObject = new JdbcTemplate(dataSource);
    }
 
-   public void create(char type, Integer customer) {
+   public void create(Card card) {
       String SQL = "insert into cards (cardtype, customer) values (?, ?)";
-      
-      jdbcTemplateObject.update( SQL, type, customer);
-      System.out.println("Created Card Record Type = " + type + " Customer = " + customer);
+      jdbcTemplateObject.update( SQL, card.getCardType(), card.getCardCustomerID());
+      System.out.println("Created Card Record Type = " + card.getCardType() + " Customer = " + card.getCardCustomerID());
       return;
    }
 
@@ -47,11 +46,11 @@ public class CardJDBCTemplate implements CardDAO {
       return;
    }
 
-   public void update(Integer id, Integer customer){
+   public void update(Card card){
 	   // TODO Update coupons etc.
-      String SQL = "update cards set customer = ? where cardid = ?";
-      jdbcTemplateObject.update(SQL, customer, id);
-      System.out.println("Updated Card Record with ID = " + id );
+      String SQL = "update cards set customer = ?, cardtype = ?, expires = ?, where cardid = ?";
+      jdbcTemplateObject.update(SQL, card.getCardCustomerID(), card.getCardType(), card.getCardExpiresDate(), card.getCardID());
+      System.out.println("Updated Card Record with ID = " + card.getCardID() );
       return;
    }
 

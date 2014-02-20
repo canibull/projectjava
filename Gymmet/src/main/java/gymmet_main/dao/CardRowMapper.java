@@ -11,10 +11,14 @@ public class CardRowMapper implements RowMapper<Card> {
    public Card mapRow(ResultSet rs, int rowNum) throws SQLException {
 	  Card card = new Card();
       card.setID(rs.getInt("cardid"));
-      card.setCardCustomer(rs.getInt("customer"));
-//      card.setCardPnr(rs.getLong("cardpnr")); 
-//      card.setCardAddress(rs.getString("cardAddress"));
-//      card.setCardPhone(rs.getString("cardphone"));
+      card.setCardCustomerID(rs.getInt("customer"));
+      card.setCardType(rs.getString("cardtype").charAt(0));
+      card.setCardCreatedDate(rs.getTimestamp("created"));
+      card.setCardExpiresDate(rs.getTimestamp("expires"));
+      card.setCardUpdatedDate(rs.getTimestamp("updated"));
+      card.setCardCoupons(rs.getInt("coupons"));
+      card.setCardAltered(false);
+      card.addToList(card);
       return card;
    }
 }

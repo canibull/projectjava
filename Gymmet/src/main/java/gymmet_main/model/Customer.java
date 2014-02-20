@@ -5,6 +5,7 @@ import gymmet_main.dao.CustomerDAO;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Customer implements Serializable {
@@ -18,8 +19,10 @@ private long custPnr;
  */
 private boolean custAltered = false;
 private String custName, custAddress, custPhone;
+
 // Array containing indexes of cards linked to customer
-private int[] custCards;
+private List<Card> custCards;
+
 // Static variable containing loaded customer instances
 private static LinkedHashMap<Long, Customer> customers = new LinkedHashMap<Long, Customer>();
 // Static variable containing new or externally loaded customer instances
@@ -29,13 +32,12 @@ public Customer() {
 
 }
 
-public Customer(int custID, long custPnr, String custName, String  custAddress,  String custPhone, int[] custCards) {
+public Customer(int custID, long custPnr, String custName, String  custAddress,  String custPhone) {
 	this.custID = custID;
 	this.setCustPnr(custPnr);
 	this.setCustName(custName);
 	this.setCustAddress(custAddress);
 	this.setCustPhone(custPhone);
-	this.setCustCards(custCards);
 	this.setCustAltered(false);
 }
 
@@ -113,6 +115,15 @@ public static Collection<Customer> getExtCustomers() {
 }
 
 /**
+ * Validate if ID is actually a customer
+ * @param custPnr Identification number
+ * @return true if such a customer exists
+ */
+public static boolean isCustomer(long custPnr) {
+	return customers.containsKey(custPnr);
+}
+
+/**
  * Set customer id
  * @param custID
  */
@@ -139,11 +150,11 @@ public void setCustAddress(String custAddress) {
 	this.setCustAltered(true);
 }
 
-public int[] getCustCards() {
+public List<Card> getCustCards() {
 	return custCards;
 }
 
-public void setCustCards(int[] custCards) {
+public void setCustCards(List<Card> custCards) {
 	this.custCards = custCards;
 	this.setCustAltered(true);
 }

@@ -16,7 +16,7 @@ public interface CardDAO {
     * This is the method to be used to create
     * a record in the Card table.
     */
-   public void create(char type, Integer customer);
+   public void create(Card card);
    /** 
     * This is the method to be used to list down
     * a record from the Card table corresponding
@@ -38,5 +38,5 @@ public interface CardDAO {
     * This is the method to be used to update
     * a record into the Card table.
     */
-   public void update(Integer id, Integer customer);
+   public void update(Card card);
 }
