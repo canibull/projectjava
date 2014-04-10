@@ -2,15 +2,17 @@ package gymmet_main;
 
 import gymmet_main.model.Card;
 import gymmet_main.model.Customer;
+import gymmet_main.model.Visit;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class InterfaceHandler extends Application {
 	private static HashMap<String, String> helpData = new HashMap<String, String>();
 	private static Scanner in = new Scanner(System.in);
-	
+	private static String commLineString = "» ";
+
 	public static void interactionLoop() throws Exception {
         System.out.println("--- START ---\n");
 
@@ -23,18 +25,25 @@ public class InterfaceHandler extends Application {
 
         // Read customers from mySQL database
         ActionHandler.loadCustomers();
+        // Read customers from mySQL database
+        ActionHandler.loadCards();
+        // Read customers from mySQL database
+        ActionHandler.loadVisits();
 
-        ActionHandler.readCardsFromCSV();
-	    for (List<Card> record : Card.getCards().values()) {
-	    	for (Card node: record) {
-	    		System.out.println(node.toString());
-	    	}
-	    }
-
+        //ActionHandler.readCardsFromCSV();
+        //Visit.commitChanges();
 		System.out.println("Welcome to the program\nWrite ´quit´ to quit.");
 
         // Print a list of all customers
         listCustomers();
+
+// Debug cards, list all cards
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+//	    for (List<Card> cardl : Card.getCards().values()) {
+//	    	for (Card card: cardl) { 
+//	    	System.out.println("CardID:"+card.getCardID()+" Coupons:"+card.getCardCoupons()+" Expires:"+df.format(card.getCardExpiresDate()));
+//	    	}
+//	    }
 
         try {
 			// Kör den primära loopen i programet
@@ -52,7 +61,9 @@ public class InterfaceHandler extends Application {
 		// Kör en loop som läser in data från standard input
 		showHelp();
 		while(true) {
-			System.out.print("» ");
+			// Reset on every loop
+			commLineString = "» ";
+			System.out.print(commLineString);
 			// Läs in nästa rad från standard input
 			kommando = in.nextLine();
 			// Hantera specialkommandot quit som måste kunna bryta loopen eller skicka vidare
@@ -62,9 +73,12 @@ public class InterfaceHandler extends Application {
 				if (confirm(in)) break;
 			} else {
 				// Dela upp kommandosträngen vid mellanslagstecken och lagra i en strängarray
-				handleInput(kommando.split(" "));
+				handleToploop(kommando.split(" "));
 			}
 		}
+		Customer.commitChanges();
+		Card.commitChanges();
+        Visit.commitChanges();
 		// Stäng scannerinstansen
 		in.close();
 	}
@@ -79,9 +93,25 @@ public class InterfaceHandler extends Application {
 		}
 	}
 
-	public static void handleInput(String[] kommandoarr) throws Exception {
+	public static void handleToploop(String[] kommandoarr) throws Exception {
 
-		if (kommandoarr[0].compareTo("view") == 0) {
+		if (kommandoarr[0].compareTo("handle") == 0) {
+
+			try {
+				long custPnr = Long.parseLong(kommandoarr[1]);
+				if (kommandoarr.length > 1 && Customer.isCustomer(custPnr)) {
+					customerLoop(custPnr);
+				} else {
+					System.out.println("No such customer found, check id.");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid identification number, check id.");
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println("You need to supply a identification number to handle.");
+			}
+
+		// Show help about a specific command
+		} else 	if (kommandoarr[0].compareTo("view") == 0) {
 
 			try {				
 				listCustomer(Long.parseLong(kommandoarr[1]));
@@ -129,6 +159,15 @@ public class InterfaceHandler extends Application {
 	    	Customer.commitChanges();
 	    	ActionHandler.loadCustomers();
 
+	    // Import card and visit data from CSV file and write them to database, update objects
+		} else if (kommandoarr[0].compareTo("importcards") == 0) {
+
+	        ActionHandler.readCardsFromCSV();
+	    	Card.commitChanges();
+	    	Visit.commitChanges();
+	    	ActionHandler.loadCards();
+	    	ActionHandler.loadVisits();
+
 		} else if (kommandoarr[0].compareTo("new") == 0) {
 
 			createNewCustomer();
@@ -151,7 +190,79 @@ public class InterfaceHandler extends Application {
 		} else {
 
 			System.out.println("Unknown command ’"+kommandoarr[0]+"’");
+			showHelp();
 
+		}
+	}
+
+	private static void customerLoop(long custPnr) {
+		String kommando = new String();
+		while(true) {
+			// Reset on every loop
+			commLineString = "[" + custPnr + "] » ";
+			System.out.print(commLineString);
+			// Läs in nästa rad från standard input
+			kommando = in.nextLine();
+			// Hantera specialkommandot quit som måste kunna bryta loopen eller skicka vidare
+			// kommandot som en array där indata separeras på mellanslagstecken till funktionen handleInput
+			if (kommando.compareTo("exit") == 0) {
+				break;
+			} else {
+				// Dela upp kommandosträngen vid mellanslagstecken och lagra i en strängarray
+				handleCustomerLoop(kommando.split(" "), custPnr);
+			}
+		}
+	}
+
+	private static void handleCustomerLoop(String[] kommandoarr, long custPnr) {
+		if (kommandoarr[0].compareTo("cards") == 0) {
+			listCards(custPnr, true);
+		} if (kommandoarr[0].compareTo("log") == 0) {
+			logVisit(custPnr);
+		}
+	}
+
+	/**
+	 * Create a new customer and commit the changes to database
+	 */
+	private static void logVisit(Long custPnr) {
+		Visit lvs = new Visit();
+		lvs.setVisitCustomerPnr(custPnr);
+		lvs.setVisitDate(new Timestamp(System.currentTimeMillis()));
+		listCards(custPnr, false);
+        System.out.print("Cardnumber: ");
+        lvs.setVisitCardID(Integer.parseInt(in.nextLine())); 
+        System.out.print("Type: ");
+        lvs.setVisitType(in.nextLine());
+        System.out.print("Description: ");
+        lvs.setVisitDescription(in.nextLine());
+        Card cardUsed = Card.getCards().get(custPnr).get(lvs.getVisitCardID());
+        if (cardUsed.isCardValid(lvs.getVisitType())) {
+        	lvs.addToList(lvs);
+        	Visit.commitChanges();
+        	cardUsed.setCardCoupons(cardUsed.getCardCoupons()-1);
+        	Card.commitChanges();
+        	System.out.println("Visit added:\n" + lvs.toString());
+        } else {
+        	System.out.println("The selected card is not valid.");
+        }
+	}
+
+	public static void listCards(Long custPnr, boolean showVisits) {
+		if (Card.getCards().get(custPnr) != null) {
+			System.out.println("User has these cards");
+		    for (Card card : Card.getCards().get(custPnr).values()) {
+		    	System.out.println(card.toString());
+		    	if (showVisits) {
+		    		if (Visit.getVisits().get((long) card.getCardID()) != null) {
+			    		for (Visit cardVisit: Visit.getVisits().get((long) card.getCardID())) {
+			    			System.out.println(cardVisit.toString());
+			    		}
+		    		}
+		    	}
+		    }
+		} else {
+			System.out.println("User has no cards");
 		}
 	}
 
@@ -171,7 +282,7 @@ public class InterfaceHandler extends Application {
 	 * Print a list of available commands
 	 */
 	private static void showHelp() {
-		System.out.println("Available commands:help, log, list, view, edit, new, remove, status, purchase, register, quit");
+		System.out.println("Available commands:handle, help, list, view, edit, new, remove, status, purchase, register, quit");
 	}
 
 	/**

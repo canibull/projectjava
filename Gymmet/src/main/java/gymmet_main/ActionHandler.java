@@ -4,9 +4,11 @@ import java.util.LinkedHashMap;
 
 import gymmet_main.dao.CardFieldSetMapper;
 import gymmet_main.dao.CustomerFieldSetMapper;
+import gymmet_main.dao.PeriodCardFieldSetMapper;
 import gymmet_main.dao.VisitsFieldSetMapper;
 import gymmet_main.model.Card;
 import gymmet_main.model.Customer;
+import gymmet_main.model.Visit;
 
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ParseException;
@@ -27,7 +29,20 @@ public class ActionHandler {
 		Customer.getCustomers().clear();
 		Customer.jdbc_DAO.loadCustomers();
 	}
-
+	/**
+	 * Load cards from database
+	 */
+	public static void loadCards() {
+		Card.getCards().clear();
+		Card.jdbc_DAO.loadCards();
+	}
+	/**
+	 * Load visits from database
+	 */
+	public static void loadVisits() {
+		Visit.getVisits().clear();
+		Visit.jdbc_DAO.loadVisits();
+	}
     /**
      * A function to import customers from a flat file database
      */
@@ -60,10 +75,10 @@ public class ActionHandler {
      */
     public static void readCardsFromCSV() {
  
-    	FlatFileItemReader<Card> itemReader = new FlatFileItemReader<Card>();
+    	FlatFileItemReader<Object> itemReader = new FlatFileItemReader<Object>();
     	itemReader.setResource(new FileSystemResource("cards.txt"));
 
-    	PatternMatchingCompositeLineMapper<Card> lineMapper = new PatternMatchingCompositeLineMapper<Card>();
+    	PatternMatchingCompositeLineMapper<Object> lineMapper = new PatternMatchingCompositeLineMapper<Object>();
 
     	DelimitedLineTokenizer semicolTokenizer = new DelimitedLineTokenizer();
     	semicolTokenizer.setDelimiter(";");
@@ -74,9 +89,9 @@ public class ActionHandler {
     	tokenizers.put("V*", semicolTokenizer);
 		lineMapper.setTokenizers(tokenizers);
  
-    	LinkedHashMap<String, FieldSetMapper<Card>> fieldSetMappers = new LinkedHashMap<String, FieldSetMapper<Card>>();
+    	LinkedHashMap<String, FieldSetMapper<Object>> fieldSetMappers = new LinkedHashMap<String, FieldSetMapper<Object>>();
     	fieldSetMappers.put("Coupons*", new CardFieldSetMapper());
-    	fieldSetMappers.put("Period*", new CardFieldSetMapper());
+    	fieldSetMappers.put("Period*", new PeriodCardFieldSetMapper());
     	fieldSetMappers.put("V*", new VisitsFieldSetMapper());
 		lineMapper.setFieldSetMappers(fieldSetMappers);
 

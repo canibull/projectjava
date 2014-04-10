@@ -87,6 +87,7 @@ public static boolean commitChanges() {
 	for (Customer cust: customers.values()) {
 		if (cust.isCustAltered()) {
 			jdbc_DAO.update(cust);
+			cust.setCustAltered(false);
 			output = true;
 		}
 	}
@@ -97,7 +98,11 @@ public static boolean commitChanges() {
  * @return Get a specific customer based on identification number
  */
 public static Customer getCustomer(long custID) {
-	return customers.get(custID);
+	if (customers.containsKey(custID)) {
+		return customers.get(custID);
+	} else {
+		return null;
+	}
 }
 
 /**

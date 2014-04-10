@@ -1,4 +1,4 @@
-Coupons;12345;7708190034;2000.0;2014-01-14;Spinning;10
+Coupons;12345;7708190034;2000.0;2014-03-14;Spinning;10
 V;2013-09-15 18:00;Spinning;Spinning soft 45min
 V;2013-09-27 12:00;Spinning;Spinning lunch
 V;2013-09-27 17:30;Spinning;Spinning intervals

@@ -11,8 +11,9 @@ public class CardRowMapper implements RowMapper<Card> {
    public Card mapRow(ResultSet rs, int rowNum) throws SQLException {
 	  Card card = new Card();
       card.setID(rs.getInt("cardid"));
-      card.setCardCustomerID(rs.getInt("customer"));
+      card.setCardCustomerPnr(rs.getLong("customer"));
       card.setCardType(rs.getString("cardtype").charAt(0));
+      card.setCardLimit(rs.getString("limitation"));
       card.setCardCreatedDate(rs.getTimestamp("created"));
       card.setCardExpiresDate(rs.getTimestamp("expires"));
       card.setCardUpdatedDate(rs.getTimestamp("updated"));

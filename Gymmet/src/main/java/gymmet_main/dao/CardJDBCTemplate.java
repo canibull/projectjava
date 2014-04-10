@@ -19,9 +19,9 @@ public class CardJDBCTemplate implements CardDAO {
    }
 
    public void create(Card card) {
-      String SQL = "insert into cards (cardtype, customer) values (?, ?)";
-      jdbcTemplateObject.update( SQL, card.getCardType(), card.getCardCustomerID());
-      System.out.println("Created Card Record Type = " + card.getCardType() + " Customer = " + card.getCardCustomerID());
+      String SQL = "insert into cards (cardid, cardtype, limitation, customer, coupons, expires) values (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE cardtype = VALUES(cardtype), limitation = VALUES(limitation), customer = VALUES(customer), coupons = VALUES(coupons), expires = VALUES(expires)";
+      jdbcTemplateObject.update( SQL, card.getCardID(), card.getCardType().toString(), card.getCardLimit(), card.getCardCustomerPnr(), card.getCardCoupons(), card.getCardExpiresDate());
+      System.out.println("Created Card Record Type = " + card.getCardType() + " Customer = " + card.getCardCustomerPnr());
       return;
    }
 
@@ -32,7 +32,7 @@ public class CardJDBCTemplate implements CardDAO {
       return Card;
    }
 
-   public List<Card> listCards() {
+   public List<Card> loadCards() {
       String SQL = "select * from cards";
       List <Card> Cards = jdbcTemplateObject.query(SQL, 
                                 new CardRowMapper());
@@ -48,8 +48,8 @@ public class CardJDBCTemplate implements CardDAO {
 
    public void update(Card card){
 	   // TODO Update coupons etc.
-      String SQL = "update cards set customer = ?, cardtype = ?, expires = ?, where cardid = ?";
-      jdbcTemplateObject.update(SQL, card.getCardCustomerID(), card.getCardType(), card.getCardExpiresDate(), card.getCardID());
+      String SQL = "update cards set customer = ?, cardtype = ?, expires = ?, coupons = ?, limitation = ? where cardid = ?";
+      jdbcTemplateObject.update(SQL, card.getCardCustomerPnr(), card.getCardType().toString(), card.getCardExpiresDate(), card.getCardCoupons(), card.getCardLimit(), card.getCardID());
       System.out.println("Updated Card Record with ID = " + card.getCardID() );
       return;
    }

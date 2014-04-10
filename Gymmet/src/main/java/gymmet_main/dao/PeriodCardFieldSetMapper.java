@@ -10,7 +10,7 @@ import gymmet_main.model.Visit;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 
-public class CardFieldSetMapper implements FieldSetMapper<Object> {
+public class PeriodCardFieldSetMapper implements FieldSetMapper<Object> {
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public Object mapFieldSet(FieldSet fieldSet) {
         Card card = new Card();
@@ -18,7 +18,6 @@ public class CardFieldSetMapper implements FieldSetMapper<Object> {
         card.setID(fieldSet.readInt(1));
         card.setCardCustomerPnr(fieldSet.readLong(2));
         card.setCardCreatedDate(new Timestamp(System.currentTimeMillis()));
-        card.setCardLimit(fieldSet.readString(5));
 
         try {
 			card.setCardExpiresDate(new Timestamp(dateFormat.parse(fieldSet.readString(4)).getTime()));
@@ -26,8 +25,8 @@ public class CardFieldSetMapper implements FieldSetMapper<Object> {
 			card.setCardExpiresDate(new Timestamp(System.currentTimeMillis()));
 		}
 
-        card.setCardType((char) 'c'); 
-        card.setCardCoupons(fieldSet.readInt(6));
+    	card.setCardType((char) 'p');
+    	card.setCardCoupons(0);
         Visit.lastCardAddedID = card.getCardID();
         Visit.lastCardAddedPnr = card.getCardCustomerPnr();
 

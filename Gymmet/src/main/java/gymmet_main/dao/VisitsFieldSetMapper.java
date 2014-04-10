@@ -1,38 +1,32 @@
 package gymmet_main.dao;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-import gymmet_main.model.Card;
-import gymmet_main.model.Customer;
+import gymmet_main.model.Visit;
 
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 
-public class VisitsFieldSetMapper implements FieldSetMapper<Card> {
-    public Card mapFieldSet(FieldSet fieldSet) {
-        Card card = new Card();
+public class VisitsFieldSetMapper implements FieldSetMapper<Object> {
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public Object mapFieldSet(FieldSet fieldSet) {
+      Visit visit = new Visit();
+      visit.setID(-1);
+      visit.setVisitCardID(Visit.lastCardAddedID);
+      visit.setVisitCustomerPnr(Visit.lastCardAddedPnr);
+      visit.setVisitType(fieldSet.readString(2));
+      visit.setVisitDescription(fieldSet.readString(3));
 
-//        card.setID(fieldSet.readInt(1));
-//        card.setCardCustomerID(Customer.getCustomer(fieldSet.readLong(2)).getCustID());
-//        card.setCardCreatedDate(new Timestamp(System.currentTimeMillis()));
-//
-//        try {
-//			card.setCardExpiresDate((Timestamp) DateFormat.getInstance().parse(fieldSet.readString(4)));
-//		} catch (ParseException e) {
-//			// TODO More robust error check
-//			card.setCardCreatedDate(new Timestamp(System.currentTimeMillis()));
-//		}
-//
-//        if (fieldSet.readString(0) == "Coupons") {
-//        	card.setCardType((char) 'c'); 
-//        	card.setCardCoupons(fieldSet.readInt(6));
-//        } else if (fieldSet.readString(0) == "Period") {
-//        	card.setCardType((char) 'p');
-//        	card.setCardCoupons(0);
-//        }
+      try {
+    	  	visit.setVisitDate(new Timestamp(dateFormat.parse(fieldSet.readString(1)).getTime()));
+		} catch (ParseException e) {
+			visit.setVisitDate(new Timestamp(System.currentTimeMillis()));
+		}
+      visit.setVisitAltered(true);
+      visit.addToList(visit);
 
-        return card;
+      return 1;
     }
 }

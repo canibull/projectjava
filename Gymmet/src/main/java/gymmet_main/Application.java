@@ -1,9 +1,12 @@
 package gymmet_main;
 
-import gymmet_main.dao.CardJDBCTemplate;
 import gymmet_main.dao.CustomerJDBCTemplate;
-import gymmet_main.model.Card;
+import gymmet_main.dao.CardJDBCTemplate;
+import gymmet_main.dao.VisitJDBCTemplate;
 import gymmet_main.model.Customer;
+import gymmet_main.model.Card;
+import gymmet_main.model.Visit;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,6 +27,7 @@ public class Application {
         // Initiate the JDBC template of container classes
         Customer.jdbc_DAO = (CustomerJDBCTemplate)context.getBean("customerJDBCTemplate");
         Card.jdbc_DAO = (CardJDBCTemplate)context.getBean("cardJDBCTemplate");
+        Visit.jdbc_DAO = (VisitJDBCTemplate)context.getBean("visitJDBCTemplate");
 
         // Start interaction loop for terminal interface
         InterfaceHandler.interactionLoop();
